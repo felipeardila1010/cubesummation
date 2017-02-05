@@ -11,6 +11,5 @@
 |
 */
 
-//Route::get('/', 'CubeSummationController@index');
-Route::get('/create', 'CubeSummationController@create')->name('create');
+Route::get('/', 'CubeSummationController@create')->name('create');
 Route::post('/create', 'CubeSummationController@store')->name('post');

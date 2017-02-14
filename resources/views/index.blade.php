@@ -26,7 +26,7 @@
 						            <div class="form-group">
 						                <label>Valor N y M:</label>
 						                <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-						                    <input type="text" class="form-control" name="NyM1" id="NyM1" value="4 5" required readonly>
+						                    <input type="text" class="form-control" name="NyM[]" id="NyM1" value="4 5" required readonly>
 						                </div>
 						            </div>
 						            <hr>
@@ -66,7 +66,7 @@
 						            <div class="form-group">
 						                <label>Valor N y M:</label>
 						                <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-						                    <input type="text" class="form-control" name="NyM2" id="NyM2" value="2 4" required readonly>
+						                    <input type="text" class="form-control" name="NyM[]" id="NyM2" value="2 4" required readonly>
 						                </div>
 						            </div>
 						            <hr>

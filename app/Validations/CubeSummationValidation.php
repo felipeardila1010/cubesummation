@@ -30,6 +30,7 @@ class CubeSummationValidation{
                 }
             }
         }
-        return "resultado: ".$sumCube."\n";
+
+        return \Lang::get('validation.cube.output.output3').$sumCube."\n";
     }
 }

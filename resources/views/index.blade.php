@@ -9,7 +9,7 @@
 
 				<div class="panel-body">
 
-					<form method="POST" action="{{ $routePost }}" accept-charset="UTF-8">
+					<form method="POST" action="{{ route('post') }}" accept-charset="UTF-8">
 						<input type="hidden" name="_token" value="{{ csrf_token() }}">
 						<div class="container">
 						<p >Solución de ejercicio Hackerrank (Cube Summation)</p>

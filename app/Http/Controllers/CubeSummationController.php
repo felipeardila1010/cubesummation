@@ -19,14 +19,13 @@ class CubeSummationController extends Controller
 
     public function create ()
     {
-        $routePost = route('post');
-        return view('index', compact($routePost) )->with( ['routePost' => $routePost] );
+        return view('index');
     }
 
     public function store (Request $request)
     {
         $response = $this->initCube->init($request->all());
-        return Response::json(['response' => $response]);
+        return view('store',compact('response'));
     }
 
 }

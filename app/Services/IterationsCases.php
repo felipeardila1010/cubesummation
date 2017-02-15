@@ -16,13 +16,15 @@ class IterationsCases{
 
 	public function iterationsNumberTestCases($data, $numberCases, $valuesNM)
     {
+        $this->response[] = \Lang::get('validation.cube.output.output1').$numberCases."\n\n";
     	for ($iterationtestcase = 0; $iterationtestcase < $numberCases; $iterationtestcase++) {
             $nm = $valuesNM[$iterationtestcase];
             $lengthCube = explode(' ', $nm)[0];
             $numberOperations = explode(' ', $nm)[1];
             $cube   = $this->querySummation->initCube($lengthCube);
             $query  = $this->querySummation->setQueries($data);
-            $this->response .= " SALIDA DE VALORES N = ".$lengthCube." y M = ".$numberOperations."\n";
+            
+            $this->response[] = \Lang::get('validation.cube.output.output2').$lengthCube." ".$numberOperations;
             $this->iterationsNumberOperations($iterationtestcase, $numberOperations, $query, $cube, $numberCases, $lengthCube);               
         }
         return $this->response;
@@ -39,7 +41,7 @@ class IterationsCases{
                 $cube[$queryUpdate['x']][$queryUpdate['y']][$queryUpdate['z']] = $queryUpdate['W'];
             }
             else if(stripos($word_query, "QUERY") !== false){
-                $this->response .= $this->cubeSummationValidation->validations($cube,
+                $this->response[] = $this->cubeSummationValidation->validations($cube,
                                                             $numberCases,
                                                             $lengthCube,
                                                             $numberOperations,

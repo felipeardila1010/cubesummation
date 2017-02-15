@@ -15,10 +15,9 @@ class InitCubeSummation{
 
 	public function init($data)
     {
-        $numberCases 	 = $data['T'];
-        $valuesNM 		 = $data['NyM'];
-        $this->response .= "SALIDA DE NUMERO DE CASO DE PRUEBA (T) = ".$numberCases."\n\n";
-        $this->response .= $this->iterationCase->iterationsNumberTestCases($data, $numberCases, $valuesNM);
+        $numberCases 	  = $data['T'];
+        $valuesNM 		  = $data['NyM'];
+        $this->response = $this->iterationCase->iterationsNumberTestCases($data, $numberCases, $valuesNM);
         return $this->response;
     }
 }

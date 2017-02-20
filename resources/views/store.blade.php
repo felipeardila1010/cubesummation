@@ -10,8 +10,8 @@
 				<div class="panel-body">
 
 
-					@foreach ($response as $result)
-					    <p>{{ $result }}</p><br/>
+					@foreach ($resultQueries as $resultQuery)
+					    <p>{{ $resultQuery }}</p><br/>
 					@endforeach
 
 				</div>

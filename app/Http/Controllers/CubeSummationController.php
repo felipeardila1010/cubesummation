@@ -1,20 +1,20 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Services\InitCubeSummation;
+use App\Http\Requests\CubeSummationRequest;
+use App\Services\InputCubeSummationService;
+use App\Services\IterationCasesService;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Response;
 
 class CubeSummationController extends Controller
 {
+    public $iterationCasesService;
 
-    private $initCube;
-
-    public function __construct (InitCubeSummation $initCube)
+    public function __construct (IterationCasesService $iterationCasesService)
     { 
-        $this->initCube = $initCube;
+        $this->iterationCasesService = $iterationCasesService;
     }
 
     public function create ()
@@ -22,10 +22,10 @@ class CubeSummationController extends Controller
         return view('index');
     }
 
-    public function store (Request $request)
+    public function store (CubeSummationRequest $request)
     {
-        $response = $this->initCube->init($request->all());
-        return view('store',compact('response'));
+        $resultQueries = $this->iterationCasesService->iterationsNumberTestCases($request->all());
+        return view('store',compact('resultQueries'));
     }
 
 }

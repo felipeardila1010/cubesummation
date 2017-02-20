@@ -18,15 +18,15 @@
 						    <div class="row">
 						        <div class="col-lg-5">
 						            <div class="form-group">
-						                <label>Valor T (Número de casos de prueba):</label>
+						                <label>Valor de los Número de casos de pruebas (T):</label>
 						                <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-						                    <input type="number" class="form-control" name="T" id="T" value="2" required readonly>
+						                    <input type="number" class="form-control" name="number_test_case" id="number_test_case" value="2" required readonly>
 						                </div>
 						            </div>
 						            <div class="form-group">
-						                <label>Valor N y M:</label>
+						                <label>Valor de  los Números de tamaño de la matriz (N) y Número de operaciones (M) :</label>
 						                <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-						                    <input type="text" class="form-control" name="NyM[]" id="NyM1" value="4 5" required readonly>
+						                    <input type="text" class="form-control" name="size_matrix_and_number_operations[]" id="size_matrix_and_number_operations1" value="4 5" required readonly>
 						                </div>
 						            </div>
 						            <hr>
@@ -64,9 +64,9 @@
 						            </div>
 						            <hr>
 						            <div class="form-group">
-						                <label>Valor N y M:</label>
+						                <label>Valor de  los Números de tamaño de la matriz (N) y Número de operaciones (M) :</label>
 						                <div class="input-group"> <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
-						                    <input type="text" class="form-control" name="NyM[]" id="NyM2" value="2 4" required readonly>
+						                    <input type="text" class="form-control" name="size_matrix_and_number_operations[]" id="size_matrix_and_number_operations2" value="2 4" required readonly>
 						                </div>
 						            </div>
 						            <hr>

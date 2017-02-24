@@ -115,15 +115,5 @@ return [
 	'attributes' => [
 		'username' => 'usuario',
 		'password' => 'contraseña'
-	],
-	'cube' => [
-        'output' => [ 	'number_test_case' 					=> 'SALIDA DEL NUMERO DE CASOS DE PRUEBA (T) = ',
-        				'size_matrix_and_number_operations' => 'SALIDA DE VALORES N y M = ',
-        				'result_queries' 					=> 'RESULTADO = ',
-        			],
-        'error'	=>	[	'size_value'						=> ' debe contener una cantidad igual a ',
-        				'constraint_cube'					=> ' debe cumplir con las restricciones del cubo sumatorio ',
-        				'query_name'						=> ' no es valido (El nombre de la consulta no es aceptado)',
-        			],
-    ]
+	]
 ];

@@ -10,6 +10,3 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', 'CubeSummationController@create')->name('create');
-Route::post('/create', 'CubeSummationController@store')->name('post');

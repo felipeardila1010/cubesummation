@@ -6,15 +6,16 @@ class NumberTestCaseValidation extends ValueValidation
 {
 	protected $attribute;
 	protected $value;
-	protected $sizeValue = 1;
+	protected $ruleSizeValue = 1;
 
-	public function input($attribute, $value, $parameters, $validator)
+	public function input($attribute, $value)
 	{
 		$this->attribute = $attribute;
-		$this->value = $value;
-		$this->validateSizeValue();
+		$this->value = $this->getArrayQuery($value[$attribute]);
+		$this->validateSize($this->nameErrorSizeValue, $this->ruleSizeValue);
+		$this->value = $value[$attribute];
 		$this->constraintCubeSummation();
-		return true;
+		return $this->value;
 	}
 
 	public function constraintCubeSummation()

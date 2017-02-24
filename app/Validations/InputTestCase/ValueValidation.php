@@ -1,16 +1,63 @@
 <?php namespace App\Validations\InputTestCase;
 
+use Lang;
+
 abstract class ValueValidation
 {
-    protected $errorMessages = 'validation.cube.error.';
+    protected $routeErrorMessages = 'cube.error.';
+    protected $routeAttributesMessages = 'cube.attributes.';
+    protected $indicatorAttribute = '/:attribute/';
+    protected $nameErrorSizeArray = 'size_array';
+    protected $nameErrorSizeValue = 'size_value';
 
-    protected function validateSizeValue()
+    protected function validateSize($nameError ,$ruleSize)
     {
-        if((count($this->value) != $this->sizeValue) && !empty($this->value)) {
-            throw new \Exception($this->getError("size_value", $this->sizeValue), 1);
-        }        
+        if((count($this->value) != $ruleSize) || empty($this->value)) {
+            throw new \Exception($this->getError($nameError, $ruleSize), 1);
+        }
     }
-    
+
+    protected function validateSizeIterations($values ,$nameError ,$ruleSize)
+    {
+        foreach ($values as $value) {
+            $this->value = $this->getArrayQuery($value);
+            $this->validateSize($nameError ,$ruleSize);
+        }
+
+        return $values;
+    }
+
+    protected function validateSizeQueryIterations($values ,$nameError ,$ruleSize)
+    {
+        foreach ($values as $value) {
+            $wordQuery = $this->getValueDividePosition($value ,0);
+
+            if(in_array($wordQuery, $this->rulesQueries)){
+                $sizeValue = $this->getPositionQuery($wordQuery, $this->rulesQueries);
+                $this->value = $this->getArrayQuery($value);
+                $this->validateSize($nameError, $sizeValue);
+            }
+            else{
+                throw new \Exception($this->getError($this->nameErrorWordQuery, $this->getSeparateByCommas($this->rulesQueries)), 1);
+            }
+        }
+
+        return $values;
+    }
+
+    protected function validateSizeAllQueriesIterations($values ,$nameError ,$nameErrorValue ,$rulesSizeNumberOperations, $rulesSizesQueries)
+    {
+        foreach ($values as $key => $value) {
+            $this->value = $value;
+            $ruleSize = $this->getValueDividePosition($rulesSizeNumberOperations[$key], 1);
+            $this->validateSize($nameError ,$ruleSize);
+
+            $this->validateSizeQueryIterations($value, $nameErrorValue, $rulesSizesQueries);
+        }
+
+        return $values;
+    }
+
     protected function isRange($value, $min, $max)
     {
         if( ($min <= $value) && ($value <= $max) ){
@@ -20,25 +67,9 @@ abstract class ValueValidation
         throw new \Exception($this->getError('constraint_cube','('.$min.' - '.$max.')'),1);
     }
 
-    public function isQuery($queries)
-    {
-        foreach ($queries as $key => $query) {
-            $wordQuery = $this->getValueDividePosition($query,0);
-            $this->value = $this->getArrayQuery($query);
-
-            if(in_array($wordQuery, $this->rulesQueries)){
-                $this->sizeValue = $this->getPositionQuery($wordQuery, $this->rulesQueries);
-                $this->validateSizeValue();
-            }
-            else{
-                throw new \Exception($this->getError('query_name'), 1);
-            }
-        }
-    }
-
     public function getPositionQuery($wordQuery, $rulesQueries)
     {
-        $positionQuery = array_search($wordQuery, $this->rulesQueries);
+        $positionQuery = array_search($wordQuery, $rulesQueries);
         return $this->rulesSizesQueries[$positionQuery];
     }
 
@@ -61,10 +92,18 @@ abstract class ValueValidation
     {
         return $array[0];
     }
+
+    public function getSeparateByCommas($value)
+    {
+        return implode(',', $value);
+    }
     
     protected function getError($error, $value_message = '')
     {
-        return $this->attribute . \Lang::get($this->errorMessages . $error). $value_message;
+        $messageError = Lang::get($this->routeErrorMessages . $error). $value_message;
+        $valueAttribute = Lang::get($this->routeAttributesMessages . $this->attribute);
+        
+        return preg_replace($this->indicatorAttribute, $valueAttribute, $messageError);
     }
 
     abstract public function constraintCubeSummation();

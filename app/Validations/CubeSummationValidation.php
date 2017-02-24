@@ -14,7 +14,7 @@ class CubeSummationValidation{
         else if(stripos($wordQuery, 'QUERY') !== false){
             $sumCube = 0;
             $sumCube = $objCubeSummationEntity->sumQuery($queryActual);
-            $objCubeSummationEntity->setResultQueries('validation.cube.output.result_queries', $sumCube);
+            $objCubeSummationEntity->setResultQueries('cube.output.result_queries', $sumCube);
         }
     }
 }

@@ -54,14 +54,19 @@ class CubeSummationEntity
         $size_matrix_and_number_operations = $data['size_matrix_and_number_operations'][$iterationtestcase];
         $data['length_cube'] = $this->divideValues($size_matrix_and_number_operations, 0);
         $data['number_operations'] = $this->divideValues($size_matrix_and_number_operations, 1);
+
         return $data;
     }
 
-    public function setQueries($data)
+    public function getQueries($data)
     {
-        $query[0] = $data['query1'];
-        $query[1] = $data['query2'];
-        return $query;
+        $queries = [];
+
+        foreach ($data['queries'] as $query) {
+            array_push($queries, $query);
+        }
+
+        return $queries;
     }
 
     public function setDataQueryUpdate($query_actual)
@@ -71,6 +76,7 @@ class CubeSummationEntity
         $queryUpdate['z'] = $query_actual[3];
         $queryUpdate['W'] = $query_actual[4];
         $this->cube[$queryUpdate['x']][$queryUpdate['y']][$queryUpdate['z']] = $queryUpdate['W'];
+        
         return $queryUpdate;
     }
 

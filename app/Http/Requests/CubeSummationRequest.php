@@ -13,10 +13,7 @@ class CubeSummationRequest extends FormRequest
     public function rules()
     {
         return [
-            'number_test_case'                  => 'number_test_case',
-            'size_matrix_and_number_operations' => 'size_matrix_and_number_operations',
-            'query1'                            => 'queries',
-            'query2'                            => 'queries',
+            'test_cases' => 'required|test_cases'
         ];
     }
 }

@@ -10,9 +10,7 @@ class ValidationCubeSummationServiceProvider extends ServiceProvider
     {
     	$routeValidationsInputTestCase = 'App\Validations\InputTestCase\\';
 
-        Validator::extend('number_test_case',                   $routeValidationsInputTestCase . 'NumberTestCaseValidation@input');
-        Validator::extend('size_matrix_and_number_operations',  $routeValidationsInputTestCase . 'SizeMatrixAndNumberOperationsCubeValidation@input');
-        Validator::extend('queries',                            $routeValidationsInputTestCase . 'QueryValidation@input');
+        Validator::extend('test_cases',$routeValidationsInputTestCase . 'TestCasesValidation@input');
     }
     
     public function register()

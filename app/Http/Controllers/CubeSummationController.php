@@ -6,7 +6,6 @@ use App\Services\InputCubeSummationService;
 use App\Services\IterationCasesService;
 
 use Illuminate\Http\Request;
-use Response;
 
 class CubeSummationController extends Controller
 {
@@ -17,15 +16,10 @@ class CubeSummationController extends Controller
         $this->iterationCasesService = $iterationCasesService;
     }
 
-    public function create ()
+    public function storeJson (CubeSummationRequest $request)
     {
-        return view('index');
-    }
-
-    public function store (CubeSummationRequest $request)
-    {
-        $resultQueries = $this->iterationCasesService->iterationsNumberTestCases($request->all());
-        return view('store',compact('resultQueries'));
+        $resultQueries = $this->iterationCasesService->iterationsNumberTestCases($request->all()['test_cases']);
+        return response()->json($resultQueries);
     }
 
 }

@@ -15,24 +15,25 @@ class IterationCasesService{
 
 	public function iterationsNumberTestCases($data)
     {
-        $this->cubeSummationEntity->setResultQueries('validation.cube.output.number_test_case', $data['number_test_case']);
+        $this->cubeSummationEntity->setResultQueries('cube.output.number_test_case', $data['number_test_case']);
 
     	for ($iterationtestcase = 0; $iterationtestcase < $data['number_test_case']; $iterationtestcase++) {
             $data   = $this->cubeSummationEntity->getSizeMatrixAndNumberOperations($data, $iterationtestcase);
             $this->cubeSummationEntity->initCube($data['length_cube']);            
-            $query  = $this->cubeSummationEntity->setQueries($data);
-            $this->cubeSummationEntity->setResultQueries('validation.cube.output.size_matrix_and_number_operations', $data['length_cube'].' '.$data['number_operations']);
-            $this->iterationsNumberOperations($data, $query, $iterationtestcase);
+            $queries  = $this->cubeSummationEntity->getQueries($data);
+            $this->cubeSummationEntity->setResultQueries('cube.output.size_matrix_and_number_operations', $data['length_cube'].' '.$data['number_operations']);
+            $this->iterationsNumberOperations($data, $queries, $iterationtestcase);
         }
+        
         return $this->cubeSummationEntity->resultQueries;
     }
 
-    public function iterationsNumberOperations($data, $query, $iterationtestcase)
+    public function iterationsNumberOperations($data, $queries, $iterationtestcase)
     {
         for ($iterationoperation = 0; $iterationoperation < $data['number_operations'] ; $iterationoperation++) {
-            $query_actual  = $this->cubeSummationEntity->getArrayQuery($query[$iterationtestcase][$iterationoperation]);
-            $word_query = $this->cubeSummationEntity->getValueFirstPosition($query_actual);
-            $this->cubeSummationValidation->querySelection($data, $query_actual, $word_query, $this->cubeSummationEntity);
+            $queryActual  = $this->cubeSummationEntity->getArrayQuery($queries[$iterationtestcase][$iterationoperation]);
+            $wordQuery = $this->cubeSummationEntity->getValueFirstPosition($queryActual);
+            $this->cubeSummationValidation->querySelection($data, $queryActual, $wordQuery, $this->cubeSummationEntity);
         }
     }
 }

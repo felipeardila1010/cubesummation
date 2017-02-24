@@ -1,16 +1,13 @@
 <?php namespace App\Services;
 
 use App\Entities\CubeSummationEntity;
-use App\Validations\CubeSummationValidation;
 
 class IterationCasesService{
 
     private $cubeSummationEntity;
-    private $cubeSummationValidation;
 
-    function __construct(CubeSummationEntity $cubeSummationEntity, CubeSummationValidation $cubeSummationValidation) {
-        $this->cubeSummationEntity = $cubeSummationEntity;
-        $this->cubeSummationValidation = $cubeSummationValidation;
+    function __construct(CubeSummationEntity $cubeSummationEntity) {
+        $this->cubeSummationEntity = $cubeSummationEntity;        
     }
 
 	public function iterationsNumberTestCases($data)
@@ -33,7 +30,19 @@ class IterationCasesService{
         for ($iterationoperation = 0; $iterationoperation < $data['number_operations'] ; $iterationoperation++) {
             $queryActual  = $this->cubeSummationEntity->getArrayQuery($queries[$iterationtestcase][$iterationoperation]);
             $wordQuery = $this->cubeSummationEntity->getValueFirstPosition($queryActual);
-            $this->cubeSummationValidation->querySelection($data, $queryActual, $wordQuery, $this->cubeSummationEntity);
+            $this->querySelection($data, $queryActual, $wordQuery);
+        }
+    }
+
+    public function querySelection($data, $queryActual, $wordQuery)
+    {
+        if(stripos($wordQuery, 'UPDATE') !== false){
+            $this->cubeSummationEntity->queryUpdate = $this->cubeSummationEntity->setDataQueryUpdate($queryActual);
+        }
+        else if(stripos($wordQuery, 'QUERY') !== false){
+            $sumCube = 0;
+            $sumCube = $this->cubeSummationEntity->sumQuery($queryActual);
+            $this->cubeSummationEntity->setResultQueries('cube.output.result_queries', $sumCube);
         }
     }
 }

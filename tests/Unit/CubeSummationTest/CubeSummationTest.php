@@ -34,7 +34,7 @@ class CubeSummationTest extends TestCase
 			]);
     }
 
-	public function testQuery()
+	public function testQuery1()
     {
         $this->json('POST', 'api/json', [
         		'test_cases' => [
@@ -55,6 +55,27 @@ class CubeSummationTest extends TestCase
 			]);
     }
 
+	public function testQuery2()
+    {
+        $this->json('POST', 'api/json', [
+        		'test_cases' => [
+	                'number_test_case' 	=> '1',
+	                'size_matrix_and_number_operations' => ['4 5'],
+	                'queries' 	=> [
+		                ['UPDATE 2 2 2 4','QUERY 1 1 1 3 3 3','UPDATE 1 1 1 23','QUERY 2 2 2 4 4 4','QUERY 1 1 1 3 3 3']
+	            	]
+            	]
+            ])
+        	->assertStatus(200)
+			->assertJson([
+	            'El valor del número de casos de prueba (T) es =  1',
+				'Los valores del tamaño del cubo y el número de operaciones es =  4 5',
+				'resultado =  4',
+				'resultado =  4',
+				'resultado =  27'
+			]);
+    }
+
 	public function testErrorNumberCase()
     {
         $this->json('POST', 'api/json', [
@@ -62,7 +83,45 @@ class CubeSummationTest extends TestCase
 	                'number_test_case' 	=> '1 5'
             	]
             ])
-        	->assertStatus(500);
+        	->assertStatus(422);
     }
 
+	public function testErrorSizeMatrixAndNumberOperations()
+    {
+        $this->json('POST', 'api/json', [
+        		'test_cases' => [
+	                'number_test_case' 	=> '1',
+	                'size_matrix_and_number_operations' => ['4 5 5']
+            	]
+            ])
+        	->assertStatus(422);
+    }
+
+    public function testErrorSizeQueries()
+    {
+        $this->json('POST', 'api/json', [
+        		'test_cases' => [
+	                'number_test_case' 	=> '1',
+	                'size_matrix_and_number_operations' => ['4 5'],
+	                'queries' 	=> [
+		                ['UPDATE 2 2 2 4','QUERY 1 1 1 3 3 3']
+	            	]
+            	]
+            ])
+        	->assertStatus(422);
+    }
+
+    public function testErrorWordQuery()
+    {
+        $this->json('POST', 'api/json', [
+        		'test_cases' => [
+	                'number_test_case' 	=> '1',
+	                'size_matrix_and_number_operations' => ['4 2'],
+	                'queries' 	=> [
+		                ['UPDATE 2 2 2 4','SELECT 1 1 1 3 3 3']
+	            	]
+            	]
+            ])
+        	->assertStatus(422);
+    }
 }

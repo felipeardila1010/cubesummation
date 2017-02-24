@@ -6,30 +6,33 @@ use App\Validations\InputTestCase\QueryValidation;
 
 use App\Validations\InputTestCase\ValueValidation;
 
-class TestCasesValidation extends ValueValidation
+class TestCasesValidation
 {
 	protected $numberTestCaseValidation;
 	protected $sizeMatrixAndNumberOperationsValidation;
-	protected $QueryValidation;
-
-	function __construct(NumberTestCaseValidation $numberTestCaseValidation) {
-		$this->numberTestCaseValidation = $numberTestCaseValidation;
-
-	}
+	protected $queryValidation;
 
 	public function input($attribute, $value, $parameters, $validator)
 	{
-		$numberTestCase = $this->numberTestCaseValidation->input('number_test_case', $value);
-		$this->sizeMatrixAndNumberOperationsValidation = new SizeMatrixAndNumberOperationsCubeValidation(
-					'size_matrix_and_number_operations', 
-					$value, 
-					$numberTestCase
-				);
-		$sizesMatrixAndNumberOperations = $this->sizeMatrixAndNumberOperationsValidation->getSizesMatrixAndNumberOperations();
-		$this->QueryValidation = new QueryValidation('queries', $value, $numberTestCase, $sizesMatrixAndNumberOperations);
+		try {
+			$this->numberTestCaseValidation = new NumberTestCaseValidation();
+			$numberTestCase = $this->numberTestCaseValidation->input('number_test_case', $value);
+			$this->sizeMatrixAndNumberOperationsValidation = new SizeMatrixAndNumberOperationsCubeValidation(
+						'size_matrix_and_number_operations', 
+						$value, 
+						$numberTestCase
+					);
+			$sizesMatrixAndNumberOperations = $this->sizeMatrixAndNumberOperationsValidation->getSizesMatrixAndNumberOperations();
+			$this->queryValidation = new QueryValidation('queries', $value, $numberTestCase, $sizesMatrixAndNumberOperations);
 
-		return true;
+			return true;
+
+		} catch (\Exception $e) {
+			$validator->addReplacer('test_cases', function ($message, $attribute, $rule, $parameters) use ($e) {
+                return $e->getMessage();
+            });
+            
+			return false;
+		}
 	}
-
-	public function constraintCubeSummation() { }	
 }
